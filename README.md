@@ -8,15 +8,14 @@ This is a repo for OTUS homeworks.
 - List of homeworks
 - Maintainers
 
-
 ## Requirements
 
 This module requires no modules outside of the current repo.
 
 ## List of homeworks
 
-1. https://github.com/bakhretdino/otus/releases/tag/17
+1. Playground for building the project on github. [Release example](https://github.com/bakhretdino/otus/releases/tag/17)
 
 ## Maintainers (optional)
 
-- Artem Bakhretdinov - [ABa](https://github.com/bakhretdino)
+- [Artem Bakhretdinov](https://github.com/bakhretdino)
