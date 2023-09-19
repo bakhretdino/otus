@@ -17,16 +17,6 @@ configure_file(
 
 add_subdirectory(libs)
 
-add_executable(helloworld hello.cpp)
-
-target_link_libraries(helloworld version_lib)
-
-set_target_properties(
-    helloworld PROPERTIES
-    CXX_STANDARD 11
-    CXX_STANDARD_REQUIRED ON
-)
-
 # Tests
 enable_testing()
 
@@ -35,7 +25,7 @@ find_package(GTest REQUIRED)
 add_subdirectory(tests)
 
 # Pack generator
-install(TARGETS helloworld RUNTIME DESTINATION bin)
+install(TARGETS ip_filter_lib RUNTIME DESTINATION bin)
 
 set(CPACK_GENERATOR DEB)
 
