@@ -19,13 +19,15 @@ add_subdirectory(libs)
 
 # Tests
 enable_testing()
+add_executable(ip_filter_app apps/hw2_ip_filter.cpp)
+target_link_libraries(ip_filter_app PUBLIC ip_filter_lib)
 
 find_package(GTest REQUIRED)
 
 add_subdirectory(tests)
 
 # Pack generator
-install(TARGETS ip_filter_lib RUNTIME DESTINATION bin)
+install(TARGETS ip_filter_app RUNTIME DESTINATION bin)
 
 set(CPACK_GENERATOR DEB)
 

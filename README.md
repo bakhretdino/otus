@@ -16,7 +16,7 @@ This module requires no modules outside of the current repo.
 
 1. Playground for building the project on github. [Release example](https://github.com/bakhretdino/otus/releases/tag/17)
 
-2. ip_filter library that can filter ip addresses using regex and stream print it. [Deb packet](https://github.com/bakhretdino/otus/releases/download/21/playground-0.0.21-Linux.deb)
+2. ip_filter library that can filter ip addresses using regex and stream print it. [Deb packet](https://github.com/bakhretdino/otus/releases/download/25/playground-0.0.25-Linux.deb)
 
 ## Maintainers (optional)
 

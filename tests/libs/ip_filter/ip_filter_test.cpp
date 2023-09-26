@@ -7,6 +7,8 @@
 #include <gtest/gtest.h>
 #include <ip_filter.hpp>
 
+/* Feel reluctant for unit tests, so integration test is enough for now */
+
 void calc_md5sum(const std::string &file_path, std::string &res) {
   std::string command = "md5sum " + file_path + " 2>&1";
   FILE *pipe = popen(command.c_str(), "r");
@@ -33,24 +35,27 @@ void calc_md5sum(const std::string &file_path, std::string &res) {
 TEST(IpVersionTest, CompareMD5) {
   std::ifstream finput("ip_filter.tsv");
   auto ip_filter = IpFilter(finput);
-  ip_filter.filter(IpFilter::Order::Descending);
+  ip_filter.get_data();
+  ip_filter.sort(IpFilter::Order::Descending);
 
   std::fstream file("output.txt",
                     std::ios::binary | std::ios::out | std::ios::trunc);
 
   /* Print result */
-  std::regex pattern(".*");
-  ip_filter.print(file, pattern);
+  ip_filter.print_sorted(file);
   /* 1st octet = 1 */
-  pattern = "\\b1\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\b";
-  ip_filter.print(file, pattern);
+  ip_filter.filter_by_val(1, {0});
+  ip_filter.print_filtered(file);
+  ip_filter.reset();
   /* 1st octet = 46 && 2nd octet = 70 */
-  pattern = "\\b46\\.70\\.[0-9]{1,3}\\.[0-9]{1,3}\\b";
-  ip_filter.print(file, pattern);
+  ip_filter.filter_by_val(46, {0});
+  ip_filter.filter_by_val(70, {1});
+  ip_filter.print_filtered(file);
+  ip_filter.reset();
   /* Any octet = 46 */
-  /* pattern = "(?:\\.|^)42(?:\\.|$)"; - if we don't trim lines after tab */
-  pattern = "\\b(46|([0-9]{1,3}\\.){3}46)\\b";
-  ip_filter.print(file, pattern);
+  ip_filter.filter_by_val(46);
+  ip_filter.print_filtered(file);
+  ip_filter.reset();
   file.close();
 
   /* Check MD5 of the file */
