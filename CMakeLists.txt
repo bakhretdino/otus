@@ -1,5 +1,8 @@
 cmake_minimum_required(VERSION 3.20)
 
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
 set(MAJOR_VERSION "0" CACHE INTERNAL "Major version")
 set(MINOR_VERSION "0" CACHE INTERNAL "Minor version")
 set(PATCH_VERSION "1" CACHE INTERNAL "Patch version")
@@ -17,17 +20,18 @@ configure_file(
 
 add_subdirectory(libs)
 
+add_executable(allocators_app apps/hw3_allocators.cpp)
+target_link_libraries(allocators_app custom_containers_lib allocator_lib)
+
 # Tests
 enable_testing()
-add_executable(ip_filter_app apps/hw2_ip_filter.cpp)
-target_link_libraries(ip_filter_app PUBLIC ip_filter_lib)
 
 find_package(GTest REQUIRED)
 
 add_subdirectory(tests)
 
 # Pack generator
-install(TARGETS ip_filter_app RUNTIME DESTINATION bin)
+install(TARGETS allocators_app RUNTIME DESTINATION bin)
 
 set(CPACK_GENERATOR DEB)
 

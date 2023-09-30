@@ -5,6 +5,7 @@ on:
     branches:
       - master
       - hw2/ip-filter
+      - hw3/allocator
   workflow_dispatch:
 
 jobs:
