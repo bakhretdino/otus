@@ -11,6 +11,9 @@ private:
   Allocator alloc;
 
 public:
+  CustomVector() = default;
+  CustomVector(const CustomVector<T, Allocator> &other);
+  ~CustomVector();
   void push_back(const T &v);
   T *begin() const;
   T *end() const;

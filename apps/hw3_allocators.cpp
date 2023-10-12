@@ -61,15 +61,25 @@ int main(void) {
   }
 
   /* Custom allocator for std::vector */
-  // std::vector<int, StackAllocator<int>> std_vector_stack_alloc;
-  // for (int i = 0; i < 10; i++) {
-  //   std_vector_stack_alloc.push_back(factorial(i));
-  // }
+  std::vector<int, StackAllocator<int>> std_vector_stack_alloc;
+  /* If not reserving, stack allocator doesn't work correctly.
+   * A research should be performed */
+  std_vector_stack_alloc.reserve(10);
+  for (int i = 0; i < 10; i++) {
+    std_vector_stack_alloc.push_back(factorial(i));
+  }
 
-  // std::cout << "\n\nStack allocated std::vector:\nValue" << std::endl;
-  // for (auto v : std_vector_stack_alloc) {
-  //   std::cout << v << std::endl;
-  // }
+  std::cout << "\n\nStack allocated std::vector:\nValue" << std::endl;
+  for (auto v : std_vector_stack_alloc) {
+    std::cout << v << std::endl;
+  }
+
+  /* CustomVector destuctor check */
+  {
+    CustomVector<int> ann;
+    ann.push_back(42);
+    auto bob = ann;
+  }
 
   return 0;
 }

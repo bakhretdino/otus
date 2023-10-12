@@ -7,16 +7,17 @@
 
 template <typename T, size_t size = 10> class StackAllocator {
 private:
-  alignas(alignof(T)) T pool[size * sizeof(T)];
+  static T pool[size];
   T *used = nullptr; /* Pointer to the end of the used memory */
 
 public:
   using value_type = T;
   StackAllocator() noexcept;
   template <typename U, size_t size_other>
-  StackAllocator(const StackAllocator<U, size_other> &) noexcept;
+  StackAllocator(const StackAllocator<U, size_other> &) = delete;
+  ~StackAllocator() = default;
   T *allocate(size_t n);
-  void deallocate(T *p, size_t n);
+  void deallocate(T *, size_t);
   StackAllocator select_on_container_copy_construction() const;
 
   template <typename U> struct rebind {
@@ -33,10 +34,12 @@ public:
   template <typename U, size_t size_other>
   constexpr bool operator!=(const StackAllocator<U, size_other> &) noexcept;
 
-  using propagate_on_container_copy_assignment = std::true_type;
-  using propagate_on_container_move_assignment = std::true_type;
-  using propagate_on_container_swap = std::true_type;
+  using propagate_on_container_copy_assignment = std::false_type;
+  using propagate_on_container_move_assignment = std::false_type;
+  using propagate_on_container_swap = std::false_type;
 };
+
+template <typename T, size_t size> T StackAllocator<T, size>::pool[size]{};
 
 #include "stack_allocator.ipp"
 

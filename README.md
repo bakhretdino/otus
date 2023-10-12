@@ -18,6 +18,8 @@ This module requires no modules outside of the current repo.
 
 2. ip_filter library that can filter ip addresses using regex and stream print it. [Deb packet](https://github.com/bakhretdino/otus/releases/download/25/playground-0.0.25-Linux.deb)
 
+3. application that uses allocator and custom containers library in various ways [Deb Packet](https://github.com/bakhretdino/otus/releases/download/31/playground-0.0.31-Linux.deb)
+
 ## Maintainers (optional)
 
 - [Artem Bakhretdinov](https://github.com/bakhretdino)
