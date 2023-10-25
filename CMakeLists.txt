@@ -20,8 +20,8 @@ configure_file(
 
 add_subdirectory(libs)
 
-add_executable(allocators_app apps/hw3_allocators.cpp)
-target_link_libraries(allocators_app custom_containers_lib allocator_lib)
+add_executable(grapic_editor apps/hw5_graphics_editor.cpp)
+target_link_libraries(grapic_editor primitive_iface primitive_impl document_factory document_iface)
 
 # Tests
 enable_testing()
@@ -31,7 +31,7 @@ find_package(GTest REQUIRED)
 add_subdirectory(tests)
 
 # Pack generator
-install(TARGETS allocators_app RUNTIME DESTINATION bin)
+install(TARGETS grapic_editor RUNTIME DESTINATION bin)
 
 set(CPACK_GENERATOR DEB)
 
