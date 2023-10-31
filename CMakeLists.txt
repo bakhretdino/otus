@@ -20,18 +20,19 @@ configure_file(
 
 add_subdirectory(libs)
 
-add_executable(allocators_app apps/hw3_allocators.cpp)
-target_link_libraries(allocators_app custom_containers_lib allocator_lib)
+add_executable(sparse_matrix_app apps/hw6_sparse_matrix.cpp)
+target_link_libraries(sparse_matrix_app sparse_matrix)
 
 # Tests
 enable_testing()
 
 find_package(GTest REQUIRED)
+find_package(Boost REQUIRED)
 
 add_subdirectory(tests)
 
 # Pack generator
-install(TARGETS allocators_app RUNTIME DESTINATION bin)
+install(TARGETS sparse_matrix_app RUNTIME DESTINATION bin)
 
 set(CPACK_GENERATOR DEB)
 
