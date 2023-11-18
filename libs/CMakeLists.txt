@@ -3,3 +3,5 @@ add_subdirectory(version)
 add_subdirectory(allocator)
 add_subdirectory(custom_containers)
 add_subdirectory(graphics_editor)
+add_subdirectory(sparse_matrix)
+
