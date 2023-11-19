@@ -6,7 +6,9 @@ on:
       - master
       - hw2/ip-filter
       - hw3/allocator
+      - hw5/vector-graphics-editor
       - hw6/matrix
+      - hw7/pkt-cmd-handler
   workflow_dispatch:
 
 jobs:
