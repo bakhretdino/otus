@@ -23,6 +23,8 @@ This module requires no modules outside of the current repo.
 
 6. 2d sparse_matrix lib and application [Deb Packet](https://github.com/bakhretdino/otus/releases/download/34/playground-0.0.34-Linux.deb)
 
+7. Packet command handler [Deb packet](https://github.com/bakhretdino/otus/releases/download/40/playground-0.0.40-Linux.deb)
+
 ## Maintainers (optional)
 
 - [Artem Bakhretdinov](https://github.com/bakhretdino)
