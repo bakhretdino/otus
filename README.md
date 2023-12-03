@@ -20,6 +20,9 @@ This module requires no modules outside of the current repo.
 
 3. application that uses allocator and custom containers library in various ways [Deb Packet](https://github.com/bakhretdino/otus/releases/download/31/playground-0.0.31-Linux.deb)
 
+4. ip print library and application [Deb Packet](https://github.com/bakhretdino/otus/releases/download/44/playground-0.0.44-Linux.deb)
+
+5. Vector graphics editor  [Deb Packet](https://github.com/bakhretdino/otus/releases/download/37/playground-0.0.37-Linux.deb)
 
 6. 2d sparse_matrix lib and application [Deb Packet](https://github.com/bakhretdino/otus/releases/download/34/playground-0.0.34-Linux.deb)
 
