@@ -1,39 +1,46 @@
+#include <esubscriber.hpp>
 #include <pkt_cmd_handler.hpp>
+#include <subscriber_factory.hpp>
 
+#include <algorithm>
 #include <chrono>
 #include <iostream>
+#include <numeric>
 
-PktCmdHandler::PktCmdHandler(int pkt_size, std::string &&log_file_prefix,
-                             std::string &&log_file_postfix,
-                             std::string &&start_delim,
+PktCmdHandler::PktCmdHandler(int pkt_size, std::string &&start_delim,
                              std::string &&stop_delim)
-    : pkt_size(pkt_size), log_file_prefix(std::move(log_file_prefix)),
-      log_file_postfix(std::move(log_file_postfix)),
-      start_delim(std::move(start_delim)), stop_delim(std::move(stop_delim)) {}
+    : pkt_size(pkt_size), start_delim(std::move(start_delim)),
+      stop_delim(std::move(stop_delim)) {}
 
-PktCmdHandler::~PktCmdHandler() {
-  if (cur_log_file.is_open()) {
-    cur_log_file.close();
-  }
+void PktCmdHandler::add_subscriber(std::unique_ptr<ISubscriber> sub) {
+  subs.push_back(std::move(sub));
 }
 
-std::string PktCmdHandler::get_cur_epoch_time_str() {
-  using namespace std::chrono;
-  auto cur_time = system_clock::now();
-  auto cur_epoch = duration_cast<seconds>(cur_time.time_since_epoch());
-  return std::to_string(cur_epoch.count());
+void PktCmdHandler::remove_subscriber(std::unique_ptr<ISubscriber> sub) {
+  auto it = std::remove_if(subs.begin(), subs.end(),
+                           [sub_ptr = sub.get()](const auto &subscriber) {
+                             return subscriber.get() == sub_ptr;
+                           });
+
+  subs.erase(it, subs.end());
 }
 
 void PktCmdHandler::print_block() {
   std::string line;
-  std::string resp_prefix = "bulk: ";
-  std::string resp;
-  resp += resp_prefix;
-  cur_log_file.seekg(0, std::ios::beg);
-  while (std::getline(cur_log_file, line)) {
-    resp += (resp.size() > resp_prefix.size() ? ", " : "") + line;
+  std::string resp = "bulk: ";
+  resp += std::accumulate(
+      cmd_pkt.begin(), cmd_pkt.end(), std::string(),
+      [](const std::string &a, const std::string &b) -> std::string {
+        return a.empty() ? b : a + ", " + b;
+      });
+
+  for (auto it = subs.begin(); it != subs.end();) {
+    auto &sub = *it;
+    sub->notify(resp);
+    it = subs.erase(it);
   }
   std::cout << resp << std::endl;
+  cmd_pkt.clear();
 }
 
 void PktCmdHandler::entry() {
@@ -42,13 +49,9 @@ void PktCmdHandler::entry() {
     if (cmd == start_delim) {
       recv_start_delim_cnt++;
     } else if (cmd != stop_delim) {
-      cur_log_file = std::fstream(
-          log_file_prefix + get_cur_epoch_time_str() + log_file_postfix,
-          std::ios::in | std::ios::out | std::ios::trunc);
-      if (!cur_log_file.is_open()) {
-        throw std::runtime_error("Can't open log file\n");
-      }
-      cur_log_file << cmd << std::endl;
+      /* Register a file subscriber */
+      add_subscriber(SubscriberFactory::create(eSubscriber::File));
+      cmd_pkt.push_back(cmd);
       recv_cmd_cnt++;
 
       if (recv_start_delim_cnt > 0) {
@@ -77,7 +80,7 @@ void PktCmdHandler::ordinary_block() {
       state = State::Entry;
     } else if (cmd != stop_delim) {
       recv_cmd_cnt++;
-      cur_log_file << cmd << std::endl;
+      cmd_pkt.push_back(cmd);
       if (recv_cmd_cnt == pkt_size) {
         print_block();
         recv_cmd_cnt = 0;
@@ -105,7 +108,7 @@ void PktCmdHandler::dynamic_block() {
       }
     } else {
       recv_cmd_cnt++;
-      cur_log_file << cmd << std::endl;
+      cmd_pkt.push_back(cmd);
     }
   } else {
     state = State::Finish;
@@ -113,11 +116,13 @@ void PktCmdHandler::dynamic_block() {
 }
 
 void PktCmdHandler::finish() {
-  if (cur_log_file.is_open() && (recv_start_delim_cnt == 0)) {
+  if (recv_start_delim_cnt == 0) {
     print_block();
     recv_cmd_cnt = 0;
   }
 }
+
+void PktCmdHandler::run() { loop(); }
 
 void PktCmdHandler::loop() {
   while (1) {

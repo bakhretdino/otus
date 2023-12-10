@@ -16,7 +16,7 @@ int main(int argc, char *argv[]) {
 
   PktCmdHandler handler(pkt_size);
 
-  handler.loop();
+  handler.run();
 
   return 0;
 }
