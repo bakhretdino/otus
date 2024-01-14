@@ -20,23 +20,26 @@ configure_file(
 
 add_subdirectory(libs)
 
-add_executable(ip_filter_app apps/hw2_ip_filter.cpp)
-target_link_libraries(ip_filter_app PUBLIC ip_filter_lib)
+# add_executable(ip_filter_app apps/hw2_ip_filter.cpp)
+# target_link_libraries(ip_filter_app PUBLIC ip_filter_lib)
 
-add_executable(allocators_app apps/hw3_allocators.cpp)
-target_link_libraries(allocators_app custom_containers_lib allocator_lib)
+# add_executable(allocators_app apps/hw3_allocators.cpp)
+# target_link_libraries(allocators_app custom_containers_lib allocator_lib)
 
-add_executable(ip_print apps/hw4_ip_printer.cpp)
-target_link_libraries(ip_print ip_printer_lib)
+# add_executable(ip_print apps/hw4_ip_printer.cpp)
+# target_link_libraries(ip_print ip_printer_lib)
 
-add_executable(grapic_editor apps/hw5_graphics_editor.cpp)
-target_link_libraries(grapic_editor primitive_iface primitive_impl document_factory document_iface)
+# add_executable(grapic_editor apps/hw5_graphics_editor.cpp)
+# target_link_libraries(grapic_editor primitive_iface primitive_impl document_factory document_iface)
 
-add_executable(sparse_matrix_app apps/hw6_sparse_matrix.cpp)
-target_link_libraries(sparse_matrix_app sparse_matrix)
+# add_executable(sparse_matrix_app apps/hw6_sparse_matrix.cpp)
+# target_link_libraries(sparse_matrix_app sparse_matrix)
 
-add_executable(bulk apps/hw7_pkt_cmd_handler.cpp)
-target_link_libraries(bulk pkt_cmd_handler)
+# add_executable(bulk apps/hw7_pkt_cmd_handler.cpp)
+# target_link_libraries(bulk pkt_cmd_handler)
+
+add_executable(async_cli apps/hw9_async_pkt_cmd_handler.cpp)
+target_link_libraries(async_cli pkt_cmd_handler_async)
 
 # Tests
 enable_testing()
@@ -47,7 +50,7 @@ find_package(Boost REQUIRED)
 add_subdirectory(tests)
 
 # Pack generator
-install(TARGETS ip_print RUNTIME DESTINATION bin)
+# install(TARGETS ip_print RUNTIME DESTINATION bin)
 
 set(CPACK_GENERATOR DEB)
 

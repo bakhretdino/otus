@@ -1,0 +1,7 @@
+add_library(pkt_cmd_handler STATIC pkt_cmd_handler.cpp)
+target_include_directories(pkt_cmd_handler PUBLIC ./)
+target_link_libraries(pkt_cmd_handler PUBLIC task_queue)
+
+add_library(pkt_cmd_handler_thread STATIC thread/pkt_cmd_handler_thread.cpp)
+target_include_directories(pkt_cmd_handler_thread PUBLIC thread/)
+target_link_libraries(pkt_cmd_handler_thread PUBLIC pkt_cmd_handler)

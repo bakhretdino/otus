@@ -1,0 +1,3 @@
+add_library(pkt_cmd_handler_async SHARED async.cpp)
+target_include_directories(pkt_cmd_handler_async INTERFACE ./)
+target_link_libraries(pkt_cmd_handler_async PUBLIC pkt_cmd_handler_thread executors task_queue handler_map)
