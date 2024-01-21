@@ -13,7 +13,7 @@ private:
   bool filtered_valid = false;
 
 public:
-  enum class Order { Accending, Descending };
+  enum class Order { Ascending, Descending };
   IpFilter(std::istream &istream);
 
   void get_data(void);

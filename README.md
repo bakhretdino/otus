@@ -28,6 +28,8 @@ This module requires no modules outside of the current repo.
 
 7. Packet command handler [Deb packet](https://github.com/bakhretdino/otus/releases/download/40/playground-0.0.40-Linux.deb)
 
+12. MLP implementation for Fashion MNIST [Deb packet](https://github.com/bakhretdino/otus/releases/download/46/playground-0.0.46-Linux.deb)
+
 ## Maintainers (optional)
 
 - [Artem Bakhretdinov](https://github.com/bakhretdino)
