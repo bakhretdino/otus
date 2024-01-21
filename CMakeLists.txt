@@ -26,6 +26,9 @@ target_link_libraries(ip_filter_app PUBLIC ip_filter_lib)
 add_executable(allocators_app apps/hw3_allocators.cpp)
 target_link_libraries(allocators_app custom_containers_lib allocator_lib)
 
+add_executable(ip_print apps/hw4_ip_printer.cpp)
+target_link_libraries(ip_print ip_printer_lib)
+
 add_executable(grapic_editor apps/hw5_graphics_editor.cpp)
 target_link_libraries(grapic_editor primitive_iface primitive_impl document_factory document_iface)
 
@@ -44,7 +47,7 @@ find_package(Boost REQUIRED)
 add_subdirectory(tests)
 
 # Pack generator
-install(TARGETS bulk RUNTIME DESTINATION bin)
+install(TARGETS ip_print RUNTIME DESTINATION bin)
 
 set(CPACK_GENERATOR DEB)
 
