@@ -74,7 +74,7 @@ int main(void) {
     std::cout << v << std::endl;
   }
 
-  /* CustomVector destuctor check */
+  /* CustomVector destructor check */
   {
     CustomVector<int> ann;
     ann.push_back(42);

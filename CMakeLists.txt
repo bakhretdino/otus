@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.20)
+cmake_minimum_required(VERSION 3.18)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -38,17 +38,19 @@ target_link_libraries(sparse_matrix_app sparse_matrix)
 add_executable(bulk apps/hw7_pkt_cmd_handler.cpp)
 target_link_libraries(bulk pkt_cmd_handler)
 
+add_executable(fashion_mnist_mlp apps/hw12_fashion_mnist_mlp.cpp)
+target_link_libraries(fashion_mnist_mlp mlp_classifier)
+
 # Tests
 enable_testing()
-
 find_package(GTest REQUIRED)
+
 find_package(Boost REQUIRED)
+find_package(Eigen3 3.3 REQUIRED)
 
 add_subdirectory(tests)
 
 # Pack generator
-install(TARGETS ip_print RUNTIME DESTINATION bin)
-
 set(CPACK_GENERATOR DEB)
 
 set(CPACK_PACKAGE_VERSION_MAJOR "${PROJECT_VERSION_MAJOR}")
